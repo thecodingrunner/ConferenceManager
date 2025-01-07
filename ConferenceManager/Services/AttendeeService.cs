@@ -24,5 +24,14 @@ namespace ConferenceManager.Services
         {
             return _attendeeRepository.GetAttendees();
         }
+
+        public Attendee UpdateAttendee(Attendee attendee)
+        {
+            return _attendeeRepository.UpdateAttendee(attendee);
+        }
+        public bool DeleteAttendee(int id)
+        {
+            return _attendeeRepository.DeleteAttendee(id);
+        }
     }
 }

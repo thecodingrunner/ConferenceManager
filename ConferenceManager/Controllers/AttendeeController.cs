@@ -9,6 +9,7 @@ namespace ConferenceManager.Controllers
 {
     [Route("/attendees")]
     [ApiController]
+    //[Authorize(Roles = "Admin")]
     public class AttendeeController : Controller
     {
 
@@ -23,15 +24,14 @@ namespace ConferenceManager.Controllers
             _userService = userService;
         }
 
-        [Authorize]
-        [HttpPost("/{EventId}")]
+        [HttpPost("{EventId}")]
         public IActionResult AddAttendeeToEvent(int EventId, Attendee attendee)
         {
-            var user = HttpContext.User;
-            var sub = user.Claims.First(claim => claim.Type == "sub").Value;
+            //var user = HttpContext.User;
+            //var sub = user.Claims.First(claim => claim.Type == "sub").Value;
 
-            if (_userService.DoesUserExist(sub))
-            {
+            //if (_userService.DoesUserExist(sub))
+            //{
                 if (attendee != null && ModelState.IsValid)
                 {
                     if (_eventService.GetEventById(EventId) != null)
@@ -41,12 +41,12 @@ namespace ConferenceManager.Controllers
                     return BadRequest("event does not exist");
                 }
                 return BadRequest("invalid attendee input");
-            }
-            return BadRequest("Unauthorised");
+            //}
+            //return BadRequest("Unauthorised");
         }
 
-        [Authorize]
-        [HttpGet("/{attendeeId}")]
+        [HttpGet("{attendeeId}")]
+        [AllowAnonymous]
         public IActionResult GetAttendeeById(int attendeeId)
         {
             var user = HttpContext.User;
@@ -58,8 +58,8 @@ namespace ConferenceManager.Controllers
             return BadRequest("attendee does not exist");
         }
 
-        //[Authorize(Roles ="Admin")]
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult GetAllAttendees()
         {
             var user = HttpContext.User;
@@ -72,6 +72,21 @@ namespace ConferenceManager.Controllers
                 return Ok(_attendeeService.GetAttendees());
             }
             return StatusCode(403,"Not in admin role");
+        }
+
+        [HttpPut]
+        public IActionResult UpdateAttendee(Attendee attendee)
+        {
+            var result = _attendeeService.UpdateAttendee(attendee);
+            if (result != null) return Ok(result);
+            return BadRequest("attendee not found");
+        }
+        [HttpDelete]
+        public IActionResult DeleteAttendee(int Id)
+        {
+            bool result = _attendeeService.DeleteAttendee(Id);
+            if (result) return NoContent();
+            return BadRequest("No matching attendee");
         }
     }
 }
