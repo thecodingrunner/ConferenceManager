@@ -20,5 +20,10 @@ namespace ConferenceManager.Services
         {
             return _eventsRepository.GetEventById(id);
         }
+
+        public Event CreateEvent(Event e)
+        {
+            return _eventsRepository.CreateEvent(e);
+        }
     }
 }
