@@ -20,5 +20,9 @@ namespace ConferenceManager.Services
         {
             return _attendeeRepository.GetAttendeeById(attendeeId);
         }
+        public List<Attendee> GetAttendees() 
+        {
+            return _attendeeRepository.GetAttendees();
+        }
     }
 }

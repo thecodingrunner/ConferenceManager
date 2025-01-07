@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 using System.Runtime.CompilerServices;
+using System.Security.Claims;
 
 namespace ConferenceManager.Controllers
 {
@@ -55,6 +56,22 @@ namespace ConferenceManager.Controllers
                 return Ok(_attendeeService.GetAttendeeById(attendeeId));
             }
             return BadRequest("attendee does not exist");
+        }
+
+        //[Authorize(Roles ="Admin")]
+        [HttpGet]
+        public IActionResult GetAllAttendees()
+        {
+            var user = HttpContext.User;
+            if(user==null) return Unauthorized("User not logged in");
+            var roles = user.Claims
+            .Where(c => c.Type == ClaimTypes.Role)
+            .Select(c => c.Value);
+            if (roles.Any(r => r == "Admin"))
+            {
+                return Ok(_attendeeService.GetAttendees());
+            }
+            return StatusCode(403,"Not in admin role");
         }
     }
 }

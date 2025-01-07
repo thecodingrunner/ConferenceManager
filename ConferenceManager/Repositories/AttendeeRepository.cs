@@ -13,5 +13,9 @@
         {
             return attendees.Where(attendee => attendee.UserId == attendeeId).FirstOrDefault();
         }
+
+        public List<Attendee> GetAttendees() {
+        return attendees;
+        }
     }
 }

@@ -15,5 +15,18 @@ namespace ConferenceManager.Services
         {
             return _speakerRepository.GetAllSpeakers(EventId);
         }
+
+        public Speaker AddSpeaker(Speaker speaker) {
+        return _speakerRepository.CreateSpeaker(speaker);
+        }
+        public Speaker UpdateSpeaker(Speaker speaker)
+        {
+           return _speakerRepository.UpdateSpeaker(speaker);
+        }
+        public bool DeleteSpeaker(int id) 
+        {
+            return _speakerRepository.DeleteSpeaker(id);
+        }
+
     }
 }

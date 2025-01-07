@@ -22,6 +22,12 @@ namespace ConferenceManager
 
             builder.Services.AddScoped<EventsService>();
             builder.Services.AddScoped<EventsRepository>();
+            builder.Services.AddScoped<AttendeeService>();
+            builder.Services.AddScoped<UserService>();
+            builder.Services.AddScoped<SpeakerService>();
+            builder.Services.AddScoped<AttendeeRepository>();
+            builder.Services.AddScoped<SpeakerRepository>();
+
             var key = Encoding.UTF8.GetBytes("your-very-secure-secret-which-must-be-quite-long-see-below");
 
             builder.Services.AddAuthentication(options =>
@@ -39,7 +45,8 @@ namespace ConferenceManager
                     ValidAudience = "your-app-name",
                     ValidateLifetime = false,
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key)
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    RoleClaimType="roles"
                 };
             });
 
