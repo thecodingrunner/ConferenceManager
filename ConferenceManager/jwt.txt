@@ -1,0 +1,12 @@
+﻿https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlRlc3QgVXNlciIsImlhdCI6MTczNjI1MDQ2OCwiZXhwIjoxNzM2MzM2ODY4LCJpc3MiOiJ5b3VyLW5hbWUiLCJhdWQiOiJ5b3VyLWFwcC1uYW1lIiwicm9sZXMiOltdfQ.defhUVjVG5fcH6ZR_PMP5lcAcdJCCb3_RPTgbS9nfnM
+
+
+{
+    "sub": "1234567890",
+    "name": "Test User",
+    "iat": 1736250468,
+    "exp": 1736336868,
+    "iss": "your-name",
+    "aud": "your-app-name",
+		"roles": []
+}
