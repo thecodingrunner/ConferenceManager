@@ -14,10 +14,10 @@ namespace ConferenceManager.Controllers
     {
 
         private readonly EventsService _eventService;
-        private readonly AttendeeService _attendeeService;
+        private readonly IAttendeeService _attendeeService;
         private readonly UserService _userService;
 
-        public AttendeeController(EventsService eventService, AttendeeService attendeeService, UserService userService)
+        public AttendeeController(EventsService eventService, IAttendeeService attendeeService, UserService userService)
         {
             _eventService = eventService;
             _attendeeService = attendeeService;

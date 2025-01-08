@@ -2,7 +2,7 @@
 
 namespace ConferenceManager.Services
 {
-    public class AttendeeService
+    public class AttendeeService : IAttendeeService
     {
         private readonly AttendeeRepository _attendeeRepository;
 
@@ -20,7 +20,7 @@ namespace ConferenceManager.Services
         {
             return _attendeeRepository.GetAttendeeById(attendeeId);
         }
-        public List<Attendee> GetAttendees() 
+        public List<Attendee> GetAttendees()
         {
             return _attendeeRepository.GetAttendees();
         }

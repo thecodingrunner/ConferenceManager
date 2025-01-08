@@ -29,8 +29,9 @@ namespace ConferenceManagerTests
         public class AttendeesControllerTests
         {
             private AttendeeController _attendeeController;
-            private AttendeeService _attendeeService;
-            private Mock<AttendeeRepository> _attendeeRepository = new Mock<AttendeeRepository>();
+           
+            //private Mock<AttendeeRepository> _attendeeRepository = new Mock<AttendeeRepository>();
+            private Mock<IAttendeeService> _attendeeService = new Mock<IAttendeeService>();
             private EventsRepository _eventsRepository;
             private EventsService _eventsService;
             private UserService _userService;
@@ -41,8 +42,8 @@ namespace ConferenceManagerTests
                 _eventsRepository = new EventsRepository();
                 _userService = new UserService();
                 _eventsService = new EventsService(_eventsRepository);
-                _attendeeService = new AttendeeService(_attendeeRepository.Object);
-                _attendeeController = new AttendeeController(_eventsService, _attendeeService, _userService);
+                //_attendeeService = new AttendeeService(_attendeeRepository.Object);
+                _attendeeController = new AttendeeController(_eventsService, _attendeeService.Object, _userService);
             }
 
             //[TearDown]
@@ -76,7 +77,7 @@ namespace ConferenceManagerTests
                 };
             }
             [Test]
-            public void Test1()
+            public void AddAttendeeToEventAuthenticated()
             {
                 //arrange
                 MockHttpContext("1", "Admin");
@@ -100,6 +101,33 @@ namespace ConferenceManagerTests
                 //assert
              
                 Assert.IsInstanceOf<OkObjectResult>(result);
+                //Assert.IsNotNull(context);
+            }
+            [Test]
+            public void AddAttendeeToEventUnAuthenticated()
+            {
+                //arrange
+                MockHttpContext("1", "User");
+
+                Attendee attendee = new Attendee()
+                {
+                    Name = "hdgfei",
+                    EventId = 1,
+                    UserId = 1,
+
+
+                };
+                var actual = _attendeeController.AddAttendeeToEvent(1, attendee);
+
+                //act
+                //var user = _attendeeController.User;
+                //var x = _attendeeController.UpdateAttendee(attendee);
+                var result = _attendeeController.AddAttendeeToEvent(1, attendee);
+                //var context = _attendeeController.ControllerContext.HttpContext;
+
+                //assert
+
+                Assert.IsInstanceOf<UnauthorizedResult>(result);
                 //Assert.IsNotNull(context);
             }
         }

@@ -22,7 +22,7 @@ namespace ConferenceManager
 
             builder.Services.AddScoped<EventsService>();
             builder.Services.AddScoped<EventsRepository>();
-            builder.Services.AddScoped<AttendeeService>();
+            builder.Services.AddScoped<IAttendeeService, AttendeeService>();
             builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<SpeakerService>();
             builder.Services.AddScoped<AttendeeRepository>();
