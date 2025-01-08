@@ -10,7 +10,7 @@ namespace ConferenceManager.Controllers
     [Route("/attendees")]
     [ApiController]
     //[Authorize(Roles = "Admin")]
-    public class AttendeeController : Controller
+    public class AttendeeController : ControllerBase
     {
 
         private readonly EventsService _eventService;
@@ -27,22 +27,19 @@ namespace ConferenceManager.Controllers
         [HttpPost("{EventId}")]
         public IActionResult AddAttendeeToEvent(int EventId, Attendee attendee)
         {
-            //var user = HttpContext.User;
-            //var sub = user.Claims.First(claim => claim.Type == "sub").Value;
-
-            //if (_userService.DoesUserExist(sub))
-            //{
-                if (attendee != null && ModelState.IsValid)
+            var user = User;
+            var role = user.FindFirstValue(ClaimTypes.Role);
+            if (role != "Admin") return Unauthorized();
+                if (attendee != null)
                 {
                     if (_eventService.GetEventById(EventId) != null)
                     {
                         return Ok(_attendeeService.AddAttendee(attendee));
                     }
-                    return BadRequest("event does not exist");
+                
+                return BadRequest("event does not exist");
                 }
-                return BadRequest("invalid attendee input");
-            //}
-            //return BadRequest("Unauthorised");
+            return BadRequest("invalid attendee input");
         }
 
         [HttpGet("{attendeeId}")]
