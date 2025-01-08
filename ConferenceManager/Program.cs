@@ -2,7 +2,9 @@
 using ConferenceManager.Repositories;
 using ConferenceManager.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Text;
 
 namespace ConferenceManager
@@ -12,6 +14,9 @@ namespace ConferenceManager
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString");
+            builder.Services.AddDbContext<ConferenceManagerDbContext>(options => options.UseSqlServer(connectionString));
 
             // Add services to the container.
 

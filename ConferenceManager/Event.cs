@@ -1,25 +1,24 @@
-﻿using System.Text.Json.Serialization;
+﻿using Microsoft.Identity.Client;
+using System.Text.Json.Serialization;
 
 namespace ConferenceManager
 {
     public class Event
     {
-        [JsonPropertyName("id")]
         public int Id { get; set; }
 
-        [JsonPropertyName("title")]
         public string Title { get; set; }
 
-        [JsonPropertyName("date")]
         public string Date { get; set; }
 
-        [JsonPropertyName("venue")]
         public string Venue { get; set; }
 
-        [JsonPropertyName("description")]
         public string Description { get; set; }
 
-        [JsonPropertyName("category")]
         public string Category { get; set; }
+
+        public Speaker Speaker { get; set; }
+
+        public List<Attendee> Attendees { get; set; }
     }
 }
